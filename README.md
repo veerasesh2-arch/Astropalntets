@@ -1,5 +1,88 @@
 # Astrobit — AI-Based Detection of Earth-Like Exoplanets in Kepler Data
 
+# Astrobit — AI-Based Detection of Earth-Like Exoplanets in Kepler Data
+
+## Overview
+
+Astrobit is an end-to-end exoplanet detection pipeline developed to identify transit signals in Kepler space telescope photometric data, with a particular focus on detecting weak, shallow, and long-period signals that may correspond to Earth-like exoplanets. The system takes raw Kepler stellar light-curve data as input and processes it through data cleaning, normalization, detrending, transit detection, candidate refinement, machine-learning classification, and final candidate generation.
+
+The fundamental principle behind the project is the transit method of exoplanet detection. When a planet passes in front of its host star along our line of sight, it blocks a small amount of the star's light, producing a small decrease in the observed stellar flux. If this decrease occurs periodically, it can indicate the presence of an orbiting planet. Astrobit is designed to automatically detect these periodic brightness variations from large volumes of Kepler photometric observations.
+
+---
+
+## Problem Statement
+
+Detecting exoplanets from stellar light curves is challenging because planetary transit signals can be extremely weak compared with stellar variability, instrumental effects, and observational noise. This becomes particularly difficult for Earth-like planets because their transit depths can be very small and their orbital periods can be hundreds of days. Long-period planets also produce only a small number of observable transits during the available observation baseline.
+
+The objective of Astrobit is therefore to build an automated pipeline that can:
+
+1. Process raw Kepler photometric data.
+2. Remove unwanted trends and instrumental variations.
+3. Search for periodic transit-like signals.
+4. Estimate the physical properties of detected candidates.
+5. Use machine learning to classify and rank the detected candidates.
+6. Assign a detection confidence to each candidate.
+7. Validate detections against known ground-truth transit signals.
+8. Produce a final candidate catalogue suitable for further analysis.
+
+---
+
+## Dataset
+
+The project uses Kepler photometric observations containing 445 stars divided into training, development, and private evaluation datasets.
+
+- Training set: 269 stars
+- Development set: 89 stars
+- Private evaluation set: 87 stars
+
+Each star contains approximately 65,000 photometric observations covering several years of Kepler observations with a cadence of approximately 29.4 minutes.
+
+The raw data contains quantities such as:
+
+- Observation time
+- Stellar flux
+- Kepler quality flags
+- Observation quarter
+
+The training and development datasets also provide ground-truth information for injected transit signals, including orbital period, transit epoch, transit depth, transit duration, planet-to-star radius ratio, and number of transits.
+
+---
+
+# Pipeline
+
+The complete Astrobit pipeline follows:
+
+```text
+Raw Kepler Photometry
+        ↓
+Quality Filtering
+        ↓
+Quarter-wise Normalization
+        ↓
+1-Day Median Detrending
+        ↓
+Flattened Light Curve
+        ↓
+Coarse BLS Period Search
+        ↓
+Promising Period Selection
+        ↓
+Fine BLS Search
+        ↓
+Harmonic / Alias Analysis
+        ↓
+Transit Candidate Extraction
+        ↓
+Random Forest ML Classification
+        ↓
+Candidate Confidence
+        ↓
+Candidate Ranking
+        ↓
+Physical Parameter Calculation
+        ↓
+Final Candidate Catalogue
+
 Astrobit is an end-to-end exoplanet detection pipeline designed to identify transit-like signals in Kepler space telescope photometry, with a particular focus on detecting shallow and long-period signals that may correspond to Earth-like exoplanets. The project processes raw Kepler stellar light curves and automatically searches for periodic decreases in stellar brightness caused by planets passing in front of their host stars. The dataset contains observations of 445 stars, divided into training, development, and private evaluation sets, with each star containing several years of high-cadence photometric observations.
 
 The pipeline begins with raw Kepler SAP flux data, which contains instrumental effects, stellar variability, noise, quarter-to-quarter flux differences, and other long-term trends that can hide weak transit signals. The preprocessing stage removes invalid observations using Kepler quality flags, normalizes the flux independently for each observing quarter, and applies a one-day running-median detrending procedure to remove large-scale variations while preserving short transit-like features. The resulting flattened light curve is normalized around a common baseline, making small periodic decreases in brightness easier to detect.
