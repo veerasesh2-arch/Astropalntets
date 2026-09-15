@@ -51,7 +51,7 @@ The training and development datasets also provide ground-truth information for 
 
 The complete Astrobit pipeline follows:
 
-```text
+```
 Raw Kepler Photometry
         ↓
 Quality Filtering
@@ -81,6 +81,7 @@ Candidate Ranking
 Physical Parameter Calculation
         ↓
 Final Candidate Catalogue
+```
 
 Astrobit is an end-to-end exoplanet detection pipeline designed to identify transit-like signals in Kepler space telescope photometry, with a particular focus on detecting shallow and long-period signals that may correspond to Earth-like exoplanets. The project processes raw Kepler stellar light curves and automatically searches for periodic decreases in stellar brightness caused by planets passing in front of their host stars. The dataset contains observations of 445 stars, divided into training, development, and private evaluation sets, with each star containing several years of high-cadence photometric observations.
 
