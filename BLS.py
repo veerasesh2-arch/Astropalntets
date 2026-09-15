@@ -6,7 +6,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # Point this to the folder containing your raw .parquet files.
 # Each file must contain: time, flux, quality, quarter.
-DATA_DIR = r"C:\Users\LSESH\OneDrive\Desktop\prjs\Astrobit\dev"
+DATA_DIR = r"Desktop\prjs\Astrobit\train"
 
 OUT_FILE = "astrobit_dev.csv"
 WORKERS = 12
