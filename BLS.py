@@ -15,7 +15,9 @@ DURATIONS = np.arange(5, 15.01, 0.5) / 24
 
 def clean(df):
     m = (df.quality.values == 0) & np.isfinite(df.flux.values)
-    t, f, q = df.time.values[m], df.flux.values[m].astype(float), df.quarter.values[m]
+    t = df.time.values[m]
+    f = df.flux.values[m].astype(float)
+    q = df.quarter.values[m]
     if len(t) < 1000:
         return None, None
     for qq in np.unique(q):
@@ -127,17 +129,19 @@ def main():
             kepid, row, error = future.result()
             if row:
                 results.append(row)
-                print(f"{done}/{len(files)} KIC_{kepid}: "
-                      f"P={row['Period_days']:.3f} d | "
-                      f"depth={row['depth_ppm']:.1f} ppm | "
-                      f"dur={row['duration_h']:.1f} h | "
-                      f"SDE={row['sde']:.2f}")
+                print(
+                    f"{done}/{len(files)} KIC_{kepid}: "
+                    f"P={row['Period_days']:.3f} d | "
+                    f"depth={row['Depth_ppm']:.1f} ppm | "
+                    f"dur={row['Duration_hours']:.1f} h | "
+                    f"SDE={row['SDE']:.2f}"
+                )
             else:
                 print(f"{done}/{len(files)} KIC_{kepid}: {error}")
 
     out = pd.DataFrame(results)
     if len(out):
-        out = out.sort_values("sde", ascending=False).reset_index(drop=True)
+        out = out.sort_values("SDE", ascending=False).reset_index(drop=True)
         out.to_csv(OUT_FILE, index=False)
 
     print("\n================ FINAL TABLE ================\n")
