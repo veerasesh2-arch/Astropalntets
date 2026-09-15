@@ -1,6 +1,5 @@
 # Astrobit — AI-Based Detection of Earth-Like Exoplanets in Kepler Data
 
-# Astrobit — AI-Based Detection of Earth-Like Exoplanets in Kepler Data
 
 ## Overview
 
