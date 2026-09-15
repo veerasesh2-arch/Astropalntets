@@ -6,7 +6,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # Automatically use the "train" folder next to this script.
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, "train")
+DATA_DIR = os.path.join(BASE_DIR, "test")
 OUT_FILE = os.path.join(DATA_DIR, "astrobit_submissions.csv")
 
 WORKERS = 12
