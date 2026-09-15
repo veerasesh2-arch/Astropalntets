@@ -1,1 +1,2 @@
 This is where you can keep your all testing parquet files here.
+Run BLS.py it take cares of all detrending and cleaning of the parquet data files.
